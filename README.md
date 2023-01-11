@@ -71,7 +71,7 @@ success: echo prints out the git short hash
 
 Evaluate the value outside the container and pass it into the build.
 
-**docker build --build-arg GIT_HASH=`git rev-parse --short HEAD` ... **
+**docker build --build-arg GIT_HASH=`git rev-parse --short HEAD` ...**
 
 GIT_HASH now has a value that is passed into the docker build cycle.
 
