@@ -71,9 +71,14 @@ success: echo prints out the git short hash
 
 Evaluate the value outside the container and pass it into the build.
 
-**ARG GIT_HASH**
+**docker build --build-arg GIT_HASH=`git rev-parse --short HEAD` ... **
 
-**RUN echo ${GIT_HASH} > foo.txt**
+GIT_HASH now has a value that is passed into the docker build cycle.
+
+
+You have to accept the build argument by adding **ARG GIT_HASH**
+
+Then you can use the build argument GIT_HASH by evaluating it with ${GIT_HASH} **RUN echo ${GIT_HASH} > foo.txt**
 
 ```docker
 FROM golang:1.19 as build
