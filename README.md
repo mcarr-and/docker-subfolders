@@ -1,4 +1,10 @@
-# from root folder of git project
+# Repo to show what is available to you in Docker when the build is running
+
+Docker will not always act the same depending on which directory you are in.
+
+You will not always have access to the git information
+
+## from root folder of git project
 ```bash
 
   docker build  . -t muz/docker-git-acccess-root-folder;
@@ -6,9 +12,9 @@
   docker run --name root-folder-git-success muz/docker-git-acccess-root-folder;
 ```
 
-## Result
+### Result
 
-success
+success: echo prints out the git short hash
 
 ### Reason
 
@@ -21,7 +27,7 @@ RUN echo `git rev-parse --short HEAD` > foo.txt
 CMD ["cat", "foo.txt"]
 ```
 
-# from sub-folder
+## from sub-folder with same Dockerfile contents
 
 ```bash
   cd subfolder-fail;
@@ -30,9 +36,9 @@ CMD ["cat", "foo.txt"]
 
   docker run --name subfolder-git-fail muz/docker-subfolder-git-fail;
 ```
-## Result
+### Result
 
-Failure
+Failure: echo returns empty string
 
 ### Reason
 
@@ -46,7 +52,7 @@ CMD ["cat", "foo.txt"]
 ```
 
 
-# from sub-folder with passed in build arguments
+## from sub-folder while passed in build argument of the git hash
 
 ```bash
   cd ../subfolder-success;
@@ -57,15 +63,16 @@ CMD ["cat", "foo.txt"]
 ```
 
 
-## Result
+### Result
 
-Success
+success: echo prints out the git short hash
 
 ### Reason
 
 Evaluate the value outside the container and pass it into the build.
 
 **ARG GIT_HASH**
+
 **RUN echo ${GIT_HASH} > foo.txt**
 
 ```docker
