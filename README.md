@@ -24,6 +24,8 @@ The .git folder was copied into the build
 
 You should not copy in your .git folder into Docker containers you distribute externally, and many Docker examples online will tell you to do just that.
 
+### Source
+
 ```docker
 FROM golang:1.19 as build
 COPY . .
@@ -46,7 +48,13 @@ Failure: echo returns empty string
 
 ### Reason
 
-no access to git, and no access to the .git folder as the build is executed off of root.
+.git folder is not copied into the Dockerfile as you are in subfolder-fail.
+
+There is no information available to git inside of Docker process to evaluate the git hash.
+
+### Source
+
+Same source as root folder.
 
 ```docker
 FROM golang:1.19 as build
@@ -54,7 +62,6 @@ COPY . .
 RUN echo `git rev-parse --short HEAD` > foo.txt
 CMD ["cat", "foo.txt"]
 ```
-
 
 ## from sub-folder while passed in build argument of the git hash
 
@@ -83,6 +90,8 @@ GIT_HASH now has a value that is passed into the docker build cycle.
 You have to accept the build argument by adding **ARG GIT_HASH**
 
 Then you can use the build argument GIT_HASH by evaluating it with ${GIT_HASH} **RUN echo ${GIT_HASH} > foo.txt**
+
+### Source
 
 ```docker
 FROM golang:1.19 as build
