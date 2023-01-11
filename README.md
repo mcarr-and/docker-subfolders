@@ -20,6 +20,10 @@ success: echo prints out the git short hash
 
 The .git folder was copied into the build
 
+**COPY . .**
+
+You should not copy in your .git folder into Docker containers you distribute externally, and many Docker examples online will tell you to do just that.
+
 ```docker
 FROM golang:1.19 as build
 COPY . .
